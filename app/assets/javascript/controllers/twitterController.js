@@ -17,6 +17,11 @@ angular.module('NetCraftTwitter').controller('TwitterController', function ($sco
 		return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));
 	}
 
+	function scrollToBottom() {
+	  var userTweets    = $('#user-tweets');
+	  userTweets.scrollTop(1E10);
+	}
+
 	function formatTweets (data) {
 		for (var tweet of data) {
 			var tweetDate = moment(parseTwitterDate(tweet.created_at)).format('DD/MM/YYYY');
@@ -42,7 +47,7 @@ angular.module('NetCraftTwitter').controller('TwitterController', function ($sco
 		return $sce.trustAsHtml(value);
 	};
 
-	$scope.getTweets = function (user, append) {
+	$scope.getTweets = function (user, append, callback) {
 		if ($scope.selectedUser === null || $scope.selectedUser.id !== user.id) {
 			$scope.page = 1;
 		}
@@ -51,6 +56,7 @@ angular.module('NetCraftTwitter').controller('TwitterController', function ($sco
 			.then(function (data) {
 				if (!append) { $scope.tweets = []; }
 				formatTweets(data);
+				if (callback) { callback(); }
 			}, function () {
 				$scope.err = true;
 			});
@@ -58,7 +64,7 @@ angular.module('NetCraftTwitter').controller('TwitterController', function ($sco
 
 	$scope.loadMoreTweets = function() {
 		$scope.page++;
-		$scope.getTweets($scope.selectedUser, true);
+		$scope.getTweets($scope.selectedUser, true, scrollToBottom);
 	};
 
 	$scope.searchUsers = function() {
@@ -98,6 +104,8 @@ angular.module('NetCraftTwitter').controller('TwitterController', function ($sco
 				if (twitterService.isReady()) {
 					$('#connectButton').fadeOut(function () {
 						$('#signOut').fadeIn();
+						$('#searchBox').fadeIn();
+						$('#searchButton').fadeIn();
 						$scope.users = [];
 						$scope.tweets = [];
 						$scope.connectedTwitter = true;
@@ -110,6 +118,8 @@ angular.module('NetCraftTwitter').controller('TwitterController', function ($sco
 		twitterService.clearCache();
 		$scope.users.length = 0;
 		$('#signOut').fadeOut(function () {
+			$('#searchBox').fadeOut();
+			$('#searchButton').fadeOut();
 			$('#connectButton').fadeIn();
 			$scope.$apply(function () {
 				$scope.users = [];
@@ -125,6 +135,7 @@ angular.module('NetCraftTwitter').controller('TwitterController', function ($sco
 	if (twitterService.isReady()) {
 		$('#connectButton').hide();
 		$('#searchBox').show();
+		$('#searchButton').show();
 		$('#signOut').show();
 
 		$scope.connectedTwitter = true;

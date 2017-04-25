@@ -4,7 +4,7 @@
 	  <p>
 	  	<div class="row">
 	  		<div class="col-xs-7">
-	  			<input type="text" ng-model="searchTerm" class="form-control" ng-change="searchUsers()" id="searchBox" placeholder="Search ..." ng-model-options="{debounce: 750}" />
+	  			<input type="text" ng-model="searchTerm" class="form-control" ng-change="searchUsers()" id="searchBox" placeholder="Search ..." ng-model-options="{debounce: 750}" style="display: none;" />
 	  		</div>
 	  		<div class="col-xs-4">
 					<div class="search-spinner spinner" ng-style="{'visibility': searching ? 'visible': 'hidden' }">
@@ -15,7 +15,7 @@
 					  <div class="rect5"></div>
 					</div>
 
-	  			<button type="button" id="searchButton" class="btn btn-primary btn-lg" ng-click="toggleSearchUI()">Show {{ primaryBtnProps.text }}
+	  			<button type="button" id="searchButton" class="btn btn-primary btn-lg" ng-click="toggleSearchUI()" style="display: none;">Show {{ primaryBtnProps.text }}
 	  				<input class="tgl tgl-flat" id="cb4" type="checkbox" style="display: none;" ng-model="primaryBtnProps.type" />
     				<label class="tgl-btn" for="cb4"></label>
   				</button>
@@ -61,11 +61,12 @@
 				<div class="col-sx-12">
 					<div class="panel panel-default tweets-columns">
 					  <div class="panel-heading">
-					    <h3 class="panel-title">Tweets</h3>
-					    <button type="button" id="loadMore" class="pull-right btn btn-link" ng-click="loadMoreTweets()" ng-show="page > 0">Load More</button>
+					    <h3 class="panel-title">Tweets
+  						    <button type="button" id="loadMore" class="pull-right btn btn-link" ng-click="loadMoreTweets()" ng-show="page > 0">Load More</button>
+					    </h3>
 					  </div>
 					  <div class="panel-body">
-					  	<div class="panel-inner">
+					  	<div class="panel-inner" id="user-tweets">
 								<div class="tweets-panel panel panel-default" ng-repeat="tweet in tweets">
 	  							<div class="panel-heading pull-right">{{ tweet.formattedDate }}</div>
 	  							<div class="panel-body" ng-bind-html="trustAsHtml(tweet.text)"></div>
