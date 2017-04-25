@@ -1,0 +1,80 @@
+<main class="container" ng-controller="TwitterController">
+	<div class="jumbotron">
+	  <h1>Welcome to FED Test</h1>
+	  <p>
+	  	<div class="row">
+	  		<div class="col-xs-7">
+	  			<input type="text" ng-model="searchTerm" class="form-control" ng-change="searchUsers()" id="searchBox" placeholder="Search ..." ng-model-options="{debounce: 750}" />
+	  		</div>
+	  		<div class="col-xs-4">
+					<div class="search-spinner spinner" ng-style="{'visibility': searching ? 'visible': 'hidden' }">
+					  <div class="rect1"></div>
+					  <div class="rect2"></div>
+					  <div class="rect3"></div>
+					  <div class="rect4"></div>
+					  <div class="rect5"></div>
+					</div>
+
+	  			<button type="button" id="searchButton" class="btn btn-primary btn-lg" ng-click="toggleSearchUI()">Show {{ primaryBtnProps.text }}
+	  				<input class="tgl tgl-flat" id="cb4" type="checkbox" style="display: none;" ng-model="primaryBtnProps.type" />
+    				<label class="tgl-btn" for="cb4"></label>
+  				</button>
+	  		</div>
+	  		<div class="col-xs-1">
+					<button type="button" id="connectButton" class="btn btn-link" ng-click="connectButton()">Connect</button>
+					<button type="button" id="signOut" class="btn btn-link" ng-click="signOut()" style="display: none;">Sign out</button>
+	  		</div>
+	  	</div>
+	  </p>
+	</div>
+
+	<section class="row" id="columns" style="display: none;">
+		<aside class="col-xs-4" id="results">
+			<div class="row">
+				<div class="col-sx-12">
+					<div class="panel panel-primary users-columns">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Users</h3>
+					  </div>
+					  <div class="panel-body">
+					  	<div class="panel-inner">
+						  	<ul class="list-group">
+									<li ng-repeat="user in users" class="list-group-item" ng-click="getTweets(user)">
+										<div class="row">
+											<div class="col-xs-4 col-sm-2">
+												<img ng-src="{{user.profile_image_url}}" class="img-circle">
+						          </div>
+						          <div class="col-xs-8 col-sm-10">
+						          	<small class="user-name">{{user.name}}</small><br>
+						          </div>
+						         </div>
+									</li>
+								</ul>
+					  	</div>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</aside>
+		<section class="col-xs-8" id="tweets">
+			<div class="row">
+				<div class="col-sx-12">
+					<div class="panel panel-default tweets-columns">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Tweets</h3>
+					    <button type="button" id="loadMore" class="pull-right btn btn-link" ng-click="loadMoreTweets()" ng-show="page > 0">Load More</button>
+					  </div>
+					  <div class="panel-body">
+					  	<div class="panel-inner">
+								<div class="tweets-panel panel panel-default" ng-repeat="tweet in tweets">
+	  							<div class="panel-heading pull-right">{{ tweet.formattedDate }}</div>
+	  							<div class="panel-body" ng-bind-html="trustAsHtml(tweet.text)"></div>
+								</div>
+							</div>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</section>
+</main>

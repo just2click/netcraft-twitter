@@ -1,0 +1,20 @@
+{
+  "name": "netcraft-twitter-client",
+  "private": true,
+  "version": "0.0.0",
+  "description": "NetCraft Twitter FED Test",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.4.0",
+    "bootstrap": "^3.2.0",
+    "angular-animate": "^1.4.0",
+    "angular-cookies": "^1.3.0",
+    "angular-resource": "^1.3.0",
+    "angular-route": "^1.3.0",
+    "angular-sanitize": "^1.3.0",
+    "angular-ui-router": "^0.2.18",
+    "angular-modal-service": "^0.10.1",
+    "angular-ui-notification": "^0.2.0",
+    "jquery": "^2.1.3"
+  }
+}
